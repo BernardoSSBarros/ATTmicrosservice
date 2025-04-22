@@ -30,3 +30,13 @@ button {
   border-radius: 10%;
   background: rgba(0, 0, 0, 0.1);
 }
+
+.input-box {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #dcdcdc;
+  border: none;
+  border-radius: 5%;
+  width: 300px;
+}
