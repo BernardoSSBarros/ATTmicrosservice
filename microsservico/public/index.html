@@ -1,51 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cardápio</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Sistema de Cardápio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Cardápio Delivery</h1>
+<body style="background-color: #B22222; font-family: sans-serif; color: #fff; padding: 20px;">
 
-  <input id="categoria" placeholder="Nova categoria" />
-  <input id="nome" placeholder="Nome do prato" />
-  <input id="preco" placeholder="Preço" />
-  <button onclick="adicionarPrato()">Adicionar ao cardápio</button>
+  <h1>Sistema de Delivery</h1>
 
-  <div class="cardapio-container">
+  <!-- Cadastro de Restaurante -->
+  <h2>Cadastrar Restaurante</h2>
+  <input type="text" id="nomeRestaurante" placeholder="Nome do Restaurante" class="input-box" />
+  <input type="text" id="cepRestaurante" placeholder="CEP do Restaurante" class="input-box" />
+  <button onclick="cadastrarRestaurante()">Cadastrar Restaurante</button>
+
+  <h3>Restaurantes Cadastrados</h3>
+  <ul id="listaRestaurantes" style="margin-bottom: 40px;"></ul>
+
+  <!-- Cadastro de Prato -->
+  <h2>Adicionar ao Cardápio</h2>
+  <input type="text" id="nomePrato" placeholder="Nome do Prato" class="input-box" />
+  <input type="text" id="precoPrato" placeholder="Preço" class="input-box" />
+  <input type="text" id="categoriaPrato" placeholder="Categoria" class="input-box" />
+  <button onclick="adicionarPrato()">Adicionar</button>
+
+  <div id="cardapio" style="margin-top: 50px; padding: 20px; border: 2px solid #000; border-radius: 10%; background-color: #fff; color: #000;">
     <h2>Cardápio</h2>
-    <ul id="lista-pratos"></ul>
+    <ul id="listaPratos"></ul>
   </div>
 
   <script>
-    async function carregarPratos() {
-      const res = await fetch('/dishes');
-      const pratos = await res.json();
-      const lista = document.getElementById('lista-pratos');
+    async function cadastrarRestaurante() {
+      const nome = document.getElementById('nomeRestaurante').value;
+      const cep = document.getElementById('cepRestaurante').value;
+
+      const res = await fetch('http://localhost:3000/restaurants', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome_restaurante: nome, cep_restaurante: cep })
+      });
+
+      if (res.ok) {
+        alert('Restaurante cadastrado!');
+        carregarRestaurantes();
+      } else {
+        alert('Erro ao cadastrar restaurante.');
+      }
+    }
+
+    async function carregarRestaurantes() {
+      const res = await fetch('http://localhost:3000/restaurants');
+      const dados = await res.json();
+      const lista = document.getElementById('listaRestaurantes');
       lista.innerHTML = '';
-      pratos.forEach(p => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${p.nome}</strong> | ${p.categoria} | R$ ${p.preco}`;
-        li.style.marginBottom = '20px';
-        lista.appendChild(li);
+      dados.forEach(r => {
+        const item = document.createElement('li');
+        item.innerText = `${r.nome_restaurante} (CEP: ${r.cep_restaurante})`;
+        lista.appendChild(item);
       });
     }
 
     async function adicionarPrato() {
-      const nome = document.getElementById('nome').value;
-      const preco = document.getElementById('preco').value;
-      const categoria = document.getElementById('categoria').value;
+      const nome = document.getElementById('nomePrato').value;
+      const preco = document.getElementById('precoPrato').value;
+      const categoria = document.getElementById('categoriaPrato').value;
 
-      await fetch('/dishes', {
+      const res = await fetch('http://localhost:3000/dishes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, preco, categoria })
       });
 
-      carregarPratos(); // Atualiza a lista
+      if (res.ok) {
+        alert('Prato adicionado!');
+        carregarPratos();
+      } else {
+        alert('Erro ao adicionar prato.');
+      }
     }
 
+    async function carregarPratos() {
+      const res = await fetch('http://localhost:3000/dishes');
+      const dados = await res.json();
+      const lista = document.getElementById('listaPratos');
+      lista.innerHTML = '';
+      dados.forEach(p => {
+        const item = document.createElement('li');
+        item.innerHTML = `<strong>${p.nome}</strong> — ${p.categoria} — R$ ${p.preco}`;
+        item.style.marginBottom = '20px';
+        lista.appendChild(item);
+      });
+    }
+
+    // Carrega dados ao iniciar
+    carregarRestaurantes();
     carregarPratos();
   </script>
 </body>
