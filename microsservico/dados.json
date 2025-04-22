@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "nome": "Pizza Margherita",
+      "categoria": "Pizza",
+      "preco": "29.90"
+    },
+    {
+      "id": 2,
+      "nome": "Sushi Especial",
+      "categoria": "Sushi",
+      "preco": "39.90"
+    }
+  ]
+  

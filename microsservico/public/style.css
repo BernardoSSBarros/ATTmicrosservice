@@ -1,0 +1,54 @@
+body {
+  background-color: #b22222; /* vermelho tijolo */
+  font-family: Arial, sans-serif;
+  color: white;
+  padding: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  width: 300px;
+  border-radius: 5%;
+  border: none;
+  background-color: #dcdcdc;
+  color: black;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cardapio-container {
+  border: 2px solid black;
+  border-radius: 10%;
+  padding: 20px;
+  background-color: #8b0000;
+}
+
+#listaCardapio {
+  list-style: none;
+  padding: 0;
+}
+
+#listaCardapio li {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
