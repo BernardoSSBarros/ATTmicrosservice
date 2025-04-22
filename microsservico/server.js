@@ -65,6 +65,39 @@ app.put('/dishes/:id/price', (req, res) => {
   });
 });
 
+// ----------------------------
+// Endpoints para RESTAURANTES
+// ----------------------------
+
+// POST - Criar novo restaurante
+app.post('/restaurants', (req, res) => {
+  const { nome_restaurante, cep_restaurante } = req.body;
+
+  if (!nome_restaurante || !cep_restaurante) {
+    return res.status(400).json({ erro: 'Campos obrigatórios faltando' });
+  }
+
+  const query = 'INSERT INTO restaurantes (nome_restaurante, cep_restaurante) VALUES (?, ?)';
+  db.query(query, [nome_restaurante, cep_restaurante], (err, result) => {
+    if (err) {
+      console.error('Erro ao inserir restaurante:', err);
+      return res.status(500).send('Erro no servidor');
+    }
+    res.status(201).json({ id_restaurante: result.insertId, nome_restaurante, cep_restaurante });
+  });
+});
+
+// GET - Listar todos os restaurantes
+app.get('/restaurants', (req, res) => {
+  db.query('SELECT * FROM restaurantes', (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar restaurantes:', err);
+      return res.status(500).send('Erro no servidor');
+    }
+    res.json(results);
+  });
+});
+
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando em http://localhost:3000:${PORT}`);
 });
