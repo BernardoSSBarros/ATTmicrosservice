@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Sistema de Delivery de Comida</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+ 
+  <div class="container">
+    <div class="form-container">
+      <h1>Bem-vindo ao Sistema de Delivery</h1>
+ 
+      <form id="userRegisterForm" class="form">
+        <h2>Cadastro de Cliente</h2>
+        <input type="text" name="name" placeholder="Nome Completo" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <button type="submit">Cadastrar Cliente</button>
+      </form>
+ 
+      <form id="restaurantRegisterForm" class="form">
+        <h2>Cadastro de Restaurante</h2>
+        <input type="text" name="name" placeholder="Nome do Restaurante" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <button type="submit">Cadastrar Restaurante</button>
+      </form>
+ 
+      <form id="loginForm" class="form">
+        <h2>Login</h2>
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <button type="submit">Entrar</button>
+      </form>
+ 
+      <div id="response" class="response"></div>
+    </div>
+  </div>
+ 
+  <script src="login.js"></script>
+</body>
+</html>
+ 
