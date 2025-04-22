@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cardápio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Cardápio Delivery</h1>
+
+  <input id="categoria" placeholder="Nova categoria" />
+  <input id="nome" placeholder="Nome do prato" />
+  <input id="preco" placeholder="Preço" />
+  <button onclick="adicionarPrato()">Adicionar ao cardápio</button>
+
+  <div class="cardapio-container">
+    <h2>Cardápio</h2>
+    <ul id="lista-pratos"></ul>
+  </div>
+
+  <script>
+    async function carregarPratos() {
+      const res = await fetch('/dishes');
+      const pratos = await res.json();
+      const lista = document.getElementById('lista-pratos');
+      lista.innerHTML = '';
+      pratos.forEach(p => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${p.nome}</strong> | ${p.categoria} | R$ ${p.preco}`;
+        li.style.marginBottom = '20px';
+        lista.appendChild(li);
+      });
+    }
+
+    async function adicionarPrato() {
+      const nome = document.getElementById('nome').value;
+      const preco = document.getElementById('preco').value;
+      const categoria = document.getElementById('categoria').value;
+
+      await fetch('/dishes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, preco, categoria })
+      });
+
+      carregarPratos(); // Atualiza a lista
+    }
+
+    carregarPratos();
+  </script>
+</body>
+</html>
