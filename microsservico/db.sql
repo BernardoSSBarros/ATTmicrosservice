@@ -14,19 +14,8 @@ CREATE TABLE dishes (
   FOREIGN KEY (categoria_id) REFERENCES categories(id)
 );
 
-CREATE DATABASE delivery_system;
-USE delivery_system;
- 
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
- 
-CREATE TABLE restaurants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+CREATE TABLE restaurantes (
+  id_restaurante INT AUTO_INCREMENT PRIMARY KEY,
+  nome_restaurante VARCHAR(100) NOT NULL,
+  cep_restaurante VARCHAR(10) NOT NULL
 );
